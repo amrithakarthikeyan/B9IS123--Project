@@ -16,7 +16,7 @@ CREATE TABLE "Assignment" (
 	"Assigned_Date"	TEXT,
 	"Return_Date"	TEXT,
 	"Condition_on_return"	TEXT,
-	FOREIGN KEY("Asset-ID","Employee_ID") REFERENCES 
+	FOREIGN KEY("Asset-ID","Employee_ID") REFERENCES " "
 );
 
 CREATE TABLE "Employees" (
