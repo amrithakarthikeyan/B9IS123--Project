@@ -22,8 +22,8 @@ Database: SQLite
 Version Control: GitHub
 Testing: Manual + Unit test of CRUD
 
-03/06/2025:
-**Features included in the project**
+**03/06/2025:**
+**Features included in the project: (CRUD Operations)**
 1. Add Asset- Create new asset records (laptop with serial number)
 2. View Assets- List all assets with details
 3. Update Asset- Edit asset status (assigned, under repair, available)
