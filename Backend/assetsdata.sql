@@ -10,13 +10,14 @@ CREATE TABLE "Assets" (
 );
 
 CREATE TABLE "Assignment" (
-	"Assignment_ID"	INTEGER NOT NULL,
+	"Assignment_ID"	INTEGER NOT NULL PRIMARY KEY,
 	"Asset-ID"	INTEGER NOT NULL,
 	"Employee_ID"	INTEGER NOT NULL,
 	"Assigned_Date"	TEXT,
 	"Return_Date"	TEXT,
 	"Condition_on_return"	TEXT,
-	FOREIGN KEY("Asset-ID","Employee_ID") REFERENCES " "
+	FOREIGN KEY("Asset-ID") REFERENCES "Assets"("Asset-ID") ,
+	FOREIGN KEY("Employee_ID") "Employees"("Employee-ID")
 );
 
 CREATE TABLE "Employees" (
