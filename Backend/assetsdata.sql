@@ -1,6 +1,6 @@
 CREATE TABLE "Assets" (
 	"Asset-ID"	INTEGER,
-	"Asset-Type"	TEXT NOT NULL,
+	"Asset-Type"	TEXT NOT NULL
 	"Brand"	TEXT,
 	"Model"	TEXT,
 	"Serial-Number"	INTEGER,
