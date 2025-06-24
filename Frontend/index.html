@@ -8,34 +8,41 @@
 
   <h3>Add / Update Asset</h3>
   <form id="assetForm">
-    <input type="hidden" name="id" />
-    <label>Asset Type:</label>
-    <input placeholder="Type" name="type" required />
-    <br />
-    <label>Brand:</label>
-    <input placeholder="Brand" name="brand" />
-    <br />
-    <label>Model:</label>
-    <input placeholder="Model" name="model" />
-    <br />
-    <label>Serial Number:</label>
-    <input placeholder="Serial #" name="serial_number" required />
-    <br />
-    <label>Date:</label>
-    <input type="date" name="purchase_date" />
-    <br />
-    <label>Status:</label>
-    <select name="status">
-      <option value="available">Available</option>
-      <option value="assigned">Assigned</option>
-      <option value="maintenance">Maintenance</option>
-      <option value="damaged">Damaged</option>
-      <option value="retired">Retired</option>
-    </select>
-    <br />
-    <button type="submit">Save</button>
-    <button type="button" id="cancelEdit">Cancel</button>
-  </form>
+  <input type="hidden" name="Asset-ID" id="Asset-ID" />
+
+  <label>Asset Type:</label>
+  <input name="Asset-Type" id="Asset-Type" required />
+  <br>
+
+  <label>Brand:</label>
+  <input name="Brand" id="Brand" />
+  <br>
+
+  <label>Model:</label>
+  <input name="Model" id="Model" />
+  <br>
+
+  <label>Serial number:</label>
+  <input name="Serial-Number" id="Serial-Number" required />
+  <br>
+
+  <label>Date:</label>
+  <input type="date" name="Purchase_Date" id="Purchase_Date" />
+  <br>
+
+  <label>Status of Asset:</label>
+  <select name="Status" id="Status">
+    <option value="available">Available</option>
+    <option value="assigned">Assigned</option>
+    <option value="maintenance">Maintenance</option>
+    <option value="damaged">Damaged</option>
+    <option value="retired">Retired</option>
+  </select>
+  <br>
+
+  <button type="submit">Save</button>
+  <button type="button" id="cancelEdit">Cancel</button>
+</form>
 
   <h3>Assets List</h3>
   <table border="1" id="assetTable">
@@ -51,9 +58,7 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody>
-      <!-- Dynamic rows will go here -->
-    </tbody>
+    <tbody></tbody>
   </table>
 
   <script src="script.js"></script>
