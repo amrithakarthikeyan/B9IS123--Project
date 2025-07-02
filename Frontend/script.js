@@ -31,3 +31,45 @@ function loadAssets() {
 }
 
 
+//Saving the data
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  console.log("Form submitted");
+
+  const formData = new FormData(form);
+  const formDataObj = Object.fromEntries(formData.entries());
+
+  const asset = {
+  "Asset-ID": formDataObj["Asset-ID"] ? parseInt(formDataObj["Asset-ID"]) : undefined,
+  "Asset-Type": formDataObj["Asset-Type"],
+  "Brand": formDataObj["Brand"],
+  "Model": formDataObj["Model"],
+  "Serial-Number": formDataObj["Serial-Number"] ? parseInt(formDataObj["Serial-Number"]) : undefined,
+  "Purchase_Date": formDataObj["Purchase_Date"],
+  "Status": formDataObj["Status"]
+};
+
+  console.log("Data being sent:", asset);
+
+  const method = asset["Asset-ID"] ? 'PUT' : 'POST';
+  const url = asset["Asset-ID"] ? `${API_URL}assets/${asset["Asset-ID"]}` : `${API_URL}assets`;
+  console.log(url+ " "+ method);
+
+  fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(asset)
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to save");
+      return res.json();
+    })
+    .then(() => {
+      form.reset();
+      loadAssets();
+    })
+    .catch(err => {
+      console.error("Save error:", err);
+      alert("Failed to save asset.");
+    });
+});
