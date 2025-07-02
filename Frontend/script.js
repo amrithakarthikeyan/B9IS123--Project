@@ -73,3 +73,20 @@ form.addEventListener('submit', function (e) {
       alert("Failed to save asset.");
     });
 });
+
+function editAsset(id) {
+  fetch(`${API_URL}assets/${id}`)
+    .then(res => res.json())
+    .then(asset => {
+      if (asset) {
+        form.elements["Asset-ID"].value = asset["Asset-ID"];
+        form.elements["Asset-Type"].value = asset["Asset-Type"];
+        form.elements["Brand"].value = asset["Brand"];
+        form.elements["Model"].value = asset["Model"];
+        form.elements["Serial-Number"].value = asset["Serial-Number"];
+        form.elements["Purchase_Date"].value = asset["Purchase_Date"];
+        form.elements["Status"].value = asset["Status"];
+      }
+      
+    });
+}
