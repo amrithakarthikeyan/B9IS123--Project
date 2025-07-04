@@ -13,11 +13,11 @@ app.use(express.json());
 const db = new sqlite3.Database('./database.db');
 //db.run (`DROP TABLE assets`);
 db.run(`CREATE TABLE IF NOT EXISTS assets (
-  "Asset-ID" INTEGER PRIMARY KEY,
+  "Asset-ID" INTEGER PRIMARY KEY NOT NULL,
   "Asset-Type" TEXT NOT NULL,
-  "Brand" TEXT,
-  "Model" TEXT,
-  "Serial-Number" INTEGER,
+  "Brand" TEXT NOT NULL,
+  "Model" TEXT NOT NULL,
+  "Serial-Number" INTEGER NOT NULL UNIQUE,
   "Purchase_Date" TEXT,
   "Status" TEXT
 )`);
@@ -25,7 +25,6 @@ db.run(`CREATE TABLE IF NOT EXISTS assets (
 app.get('/', (req, res) => {
   res.send('Welcome to the Sparkout Tech Info System API');
 });
-
 
 // GET all assets
 app.get('/assets', (req, res) => {
