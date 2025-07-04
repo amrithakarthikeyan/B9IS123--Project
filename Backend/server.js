@@ -116,3 +116,7 @@ app.delete('/assets/:id', (req, res) => {
     });
     console.log("Asset details deleted");
 });
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
