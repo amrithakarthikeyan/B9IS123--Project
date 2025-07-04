@@ -103,5 +103,5 @@ app.put('/assets/:id', (req, res) => {
       if (err) return res.status(500).json({ error: err.message });
       res.json({ updated: this.changes });
     });
-    
+    console.log("Asset edited successfully " + `${assetType}, ${Brand}, ${Model}, ${serialNumber}, ${Purchase_Date}, ${Status}`);
 });
