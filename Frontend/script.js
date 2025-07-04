@@ -90,3 +90,14 @@ function editAsset(id) {
       
     });
 }
+
+function deleteAsset(id) {
+  if (confirm("Are you sure you want to delete this asset?")) {
+    fetch(`${API_URL}assets/${id}`, { method: 'DELETE' })
+      .then(() => loadAssets());
+  }
+}
+
+cancelEditBtn.addEventListener('click', () => form.reset());
+
+loadAssets();
