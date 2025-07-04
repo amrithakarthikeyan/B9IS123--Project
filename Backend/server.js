@@ -25,3 +25,39 @@ db.run(`CREATE TABLE IF NOT EXISTS assets (
 app.get('/', (req, res) => {
   res.send('Welcome to the Sparkout Tech Info System API');
 });
+
+
+// GET all assets
+app.get('/assets', (req, res) => {
+  db.all(`SELECT 
+    "Asset-ID",
+    "Asset-Type",
+    "Brand",
+    "Model",
+    "Serial-Number",
+    "Purchase_Date",
+    "Status"
+    FROM assets`, 
+    (err, rows) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(rows);
+    });
+});
+
+// GET single asset
+app.get('/assets/:id', (req, res) => {
+  db.get(`SELECT 
+    "Asset-ID",
+    "Asset-Type",
+    "Brand",
+    "Model",
+    "Serial-Number",
+    "Purchase_Date",
+    "Status"
+    FROM assets WHERE "Asset-ID" = ?`, 
+    [req.params.id], 
+    (err, row) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(row);
+    });
+});
