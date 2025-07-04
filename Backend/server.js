@@ -61,3 +61,28 @@ app.get('/assets/:id', (req, res) => {
       res.json(row);
     });
 });
+
+// ADD asset
+app.post('/assets', (req, res) => {
+  const { "Asset-Type": assetType, Brand, Model, "Serial-Number": serialNumber, Purchase_Date, Status } = req.body;
+
+  // Basic validation for missing fields
+  if (!assetType || !Brand || !Model || !serialNumber || !Purchase_Date || !Status) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  db.run(`INSERT INTO assets (
+    "Asset-Type", "Brand", "Model", "Serial-Number", "Purchase_Date", "Status")
+    VALUES (?, ?, ?, ?, ?, ?)`,
+    [assetType, Brand, Model, serialNumber, Purchase_Date, Status],
+    function(err) {
+      if (err) {
+        // Handle unique constraint error for Serial-Number
+        if (err.message.includes('UNIQUE')) {
+          return res.status(400).json({ error: 'Serial Number must be unique' });
+        }
+        return res.status(500).json({ error: err.message });
+      }
+      res.json({ id: this.lastID });
+    });
+});
