@@ -86,3 +86,22 @@ app.post('/assets', (req, res) => {
       res.json({ id: this.lastID });
     });
 });
+
+// UPDATE asset
+app.put('/assets/:id', (req, res) => {
+  const { "Asset-Type": assetType, Brand, Model, "Serial-Number": serialNumber, Purchase_Date, Status } = req.body;
+  db.run(`UPDATE assets SET 
+    "Asset-Type" = ?, 
+    "Brand" = ?, 
+    "Model" = ?, 
+    "Serial-Number" = ?, 
+    "Purchase_Date" = ?, 
+    "Status" = ? 
+    WHERE "Asset-ID" = ?`,
+    [assetType, Brand, Model, serialNumber, Purchase_Date, Status, req.params.id],
+    function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json({ updated: this.changes });
+    });
+    
+});
