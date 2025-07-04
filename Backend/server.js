@@ -105,3 +105,14 @@ app.put('/assets/:id', (req, res) => {
     });
     console.log("Asset edited successfully " + `${assetType}, ${Brand}, ${Model}, ${serialNumber}, ${Purchase_Date}, ${Status}`);
 });
+
+// DELETE asset
+app.delete('/assets/:id', (req, res) => {
+  db.run(`DELETE FROM assets WHERE "Asset-ID" = ?`, 
+    [req.params.id], 
+    function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json({ deleted: this.changes });
+    });
+    console.log("Asset details deleted");
+});
