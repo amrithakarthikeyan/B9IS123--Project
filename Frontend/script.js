@@ -55,6 +55,7 @@ form.addEventListener('submit', function (e) {
   const url = asset["Asset-ID"] ? `${API_URL}assets/${asset["Asset-ID"]}` : `${API_URL}assets`;
   console.log(url+ " "+ method);
 
+//Error pop-ups to prompt user
 fetch(url, {
   method,
   headers: { 'Content-Type': 'application/json' },
@@ -78,6 +79,7 @@ fetch(url, {
 
 });
 
+//To edit an asset
 function editAsset(id) {
   fetch(`${API_URL}assets/${id}`)
     .then(res => res.json())
@@ -95,12 +97,24 @@ function editAsset(id) {
     });
 }
 
+//To delete an asset
 function deleteAsset(id) {
   if (confirm("Are you sure you want to delete this asset?")) {
     fetch(`${API_URL}assets/${id}`, { method: 'DELETE' })
       .then(() => loadAssets());
   }
 }
+
+//Adding Filtering logic for Search feature
+document.getElementById('searchInput').addEventListener('input', function () {
+  const query = this.value.toLowerCase();
+  const rows = document.querySelectorAll('#assetTable tbody tr');
+
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(query) ? '' : 'none';
+  });
+});
 
 cancelEditBtn.addEventListener('click', () => form.reset());
 
