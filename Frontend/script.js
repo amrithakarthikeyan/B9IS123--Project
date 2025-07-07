@@ -105,17 +105,19 @@ function deleteAsset(id) {
   }
 }
 
-//Adding Filtering logic for Search feature
-document.getElementById('searchInput').addEventListener('input', function () {
-  const query = this.value.toLowerCase();
-  const rows = document.querySelectorAll('#assetTable tbody tr');
-
-  rows.forEach(row => {
-    const text = row.textContent.toLowerCase();
-    row.style.display = text.includes(query) ? '' : 'none';
-  });
-});
 
 cancelEditBtn.addEventListener('click', () => form.reset());
 
 loadAssets();
+
+document.getElementById('searchInput').addEventListener('input', filterAssets);
+
+function filterAssets() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  const rows = document.querySelectorAll('#assetTable tbody tr');
+
+  rows.forEach(row => {
+    const rowText = row.textContent.toLowerCase();
+    row.style.display = rowText.includes(query) ? '' : 'none';
+  });
+}
