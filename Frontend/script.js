@@ -55,23 +55,27 @@ form.addEventListener('submit', function (e) {
   const url = asset["Asset-ID"] ? `${API_URL}assets/${asset["Asset-ID"]}` : `${API_URL}assets`;
   console.log(url+ " "+ method);
 
-  fetch(url, {
-    method,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(asset)
+fetch(url, {
+  method,
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(asset)
+})
+  .then(async res => {
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to save asset.");
+    }
+    return data;
   })
-    .then(res => {
-      if (!res.ok) throw new Error("Failed to save");
-      return res.json();
-    })
-    .then(() => {
-      form.reset();
-      loadAssets();
-    })
-    .catch(err => {
-      console.error("Save error:", err);
-      alert("Failed to save asset.");
-    });
+  .then(() => {
+    form.reset();
+    loadAssets();
+  })
+  .catch(err => {
+    console.error("Save error:", err.message);
+    alert("Error: " + err.message);
+  });
+
 });
 
 function editAsset(id) {
