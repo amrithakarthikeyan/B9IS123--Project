@@ -1,48 +1,72 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Asset Management System</title>
 </head>
+
 <body>
   <h1>Asset Management System</h1>
 
   <h3>Add / Update Asset</h3>
   <form id="assetForm">
-  <input type="hidden" name="Asset-ID" id="Asset-ID" />
+    <input type="hidden" name="Asset-ID" id="Asset-ID" />
 
-  <label>Asset Type:</label>
-  <input name="Asset-Type" id="Asset-Type" required />
-  <br>
+    <label>Asset Type:</label>
+    <select name="Asset-Type" id="Asset-Type" required>
+      <option value="">-- Select Asset Type --</option>
+      <option value="Laptop">Laptop</option>
+      <option value="Desktop">Desktop</option>
+      <option value="Monitor">Monitor</option>
+      <option value="Keyboard">Keyboard</option>
+      <option value="Mouse">Mouse</option>
+      <option value="Printer">Printer</option>
+      <option value="Router">Router</option>
+      <option value="Mobile">Mobile</option>
+      <option value="Tablet">Tablet</option>
+    </select>
+    <br><br>
 
-  <label>Brand:</label>
-  <input name="Brand" id="Brand" />
-  <br>
+    <label>Brand:</label>
+    <select name="Brand" id="Brand" required>
+      <option value="">-- Select Brand --</option>
+      <option value="Dell">Dell</option>
+      <option value="HP">HP</option>
+      <option value="Lenovo">Lenovo</option>
+      <option value="Apple">Apple</option>
+      <option value="Asus">Asus</option>
+      <option value="Acer">Acer</option>
+      <option value="Samsung">Samsung</option>
+      <option value="Logitech">Logitech</option>
+      <option value="Cisco">Cisco</option>
+    </select>
+    <br>
+    <br>
+    <label>Model:</label>
+    <input name="Model" id="Model" />
+    <br>
+    <br>
+    <label>Serial number:</label>
+    <input name="Serial-Number" id="Serial-Number" required />
+    <br>
+    <br>
+    <label>Date:</label>
+    <input type="date" name="Purchase_Date" id="Purchase_Date" />
+    <br>
+    <br>
+    <label>Status of Asset:</label>
+    <select name="Status" id="Status">
+      <option value="available">Available</option>
+      <option value="assigned">Assigned</option>
+      <option value="maintenance">Maintenance</option>
+      <option value="damaged">Damaged</option>
+      <option value="retired">Retired</option>
+    </select>
+    <br>
 
-  <label>Model:</label>
-  <input name="Model" id="Model" />
-  <br>
-
-  <label>Serial number:</label>
-  <input name="Serial-Number" id="Serial-Number" required />
-  <br>
-
-  <label>Date:</label>
-  <input type="date" name="Purchase_Date" id="Purchase_Date" />
-  <br>
-
-  <label>Status of Asset:</label>
-  <select name="Status" id="Status">
-    <option value="available">Available</option>
-    <option value="assigned">Assigned</option>
-    <option value="maintenance">Maintenance</option>
-    <option value="damaged">Damaged</option>
-    <option value="retired">Retired</option>
-  </select>
-  <br>
-
-  <button type="submit">Save</button>
-  <button type="button" id="cancelEdit">Cancel</button>
-</form>
+    <button type="submit">Save</button>
+    <button type="button" id="cancelEdit">Cancel</button>
+  </form>
 
   <h3>Assets List</h3>
   <table border="1" id="assetTable">
@@ -63,4 +87,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>

@@ -1,12 +1,9 @@
-DROP TABLE IF EXISTS Assets;
-
-CREATE TABLE "Assets" (
-	"Asset-ID"	INTEGER,
-	"Asset-Type"	TEXT NOT NULL,
-	"Brand"	TEXT,
-	"Model"	TEXT,
-	"Serial-Number"	INTEGER,
-	"Purchase_Date"	TEXT,
-	"Status"	TEXT,
-	PRIMARY KEY("Asset-ID")
+CREATE TABLE IF NOT EXISTS assets (
+  "Asset-ID" INTEGER PRIMARY KEY NOT NULL,           
+  "Asset-Type" TEXT NOT NULL,
+  "Brand" TEXT NOT NULL,
+  "Model" TEXT NOT NULL,
+  "Serial-Number" INTEGER NOT NULL UNIQUE,          
+  "Purchase_Date" TEXT,
+  "Status" TEXT
 );
