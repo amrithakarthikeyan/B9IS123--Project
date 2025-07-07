@@ -55,7 +55,7 @@ form.addEventListener('submit', function (e) {
   const url = asset["Asset-ID"] ? `${API_URL}assets/${asset["Asset-ID"]}` : `${API_URL}assets`;
   console.log(url+ " "+ method);
 
-//Error pop-ups to prompt user
+//Error pop-ups to prompt
 fetch(url, {
   method,
   headers: { 'Content-Type': 'application/json' },
@@ -104,20 +104,6 @@ function deleteAsset(id) {
       .then(() => loadAssets());
   }
 }
-
-
 cancelEditBtn.addEventListener('click', () => form.reset());
 
 loadAssets();
-
-document.getElementById('searchInput').addEventListener('input', filterAssets);
-
-function filterAssets() {
-  const query = document.getElementById('searchInput').value.toLowerCase();
-  const rows = document.querySelectorAll('#assetTable tbody tr');
-
-  rows.forEach(row => {
-    const rowText = row.textContent.toLowerCase();
-    row.style.display = rowText.includes(query) ? '' : 'none';
-  });
-}
