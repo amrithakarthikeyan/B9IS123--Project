@@ -12,7 +12,7 @@
   <form id="assetForm">
     <input type="hidden" name="Asset-ID" id="Asset-ID" />
 
-    <label>Asset Type:</label>
+    <label for= "Asset-Type"> Asset Type:</label>
     <select name="Asset-Type" id="Asset-Type" required>
       <option value="">-- Select Asset Type --</option>
       <option value="Laptop">Laptop</option>
@@ -27,7 +27,7 @@
     </select>
     <br><br>
 
-    <label>Brand:</label>
+    <label for= "Brand">Brand:</label>
     <select name="Brand" id="Brand" required>
       <option value="">-- Select Brand --</option>
       <option value="Dell">Dell</option>
@@ -42,19 +42,19 @@
     </select>
     <br>
     <br>
-    <label>Model:</label>
+    <label for="Model">Model:</label>
     <input name="Model" id="Model" />
     <br>
     <br>
-    <label>Serial number:</label>
+    <label for="Serial-Number">Serial number:</label>
     <input name="Serial-Number" id="Serial-Number" required />
     <br>
     <br>
-    <label>Date:</label>
+    <label for="Purchase_Date">Date:</label>
     <input type="date" name="Purchase_Date" id="Purchase_Date" />
     <br>
     <br>
-    <label>Status of Asset:</label>
+    <label for="Status">Status of Asset:</label>
     <select name="Status" id="Status">
       <option value="available">Available</option>
       <option value="assigned">Assigned</option>
@@ -62,12 +62,24 @@
       <option value="damaged">Damaged</option>
       <option value="retired">Retired</option>
     </select>
-    <br>
+    <br><br>
 
+    <label for="Employee-ID">
+      Assigned to Employee:
+      <select name="Employee-ID" id="Employee-ID" required>
+        <option value="">-- Select Employee --</option>
+        <!-- Employee options will be populated here dynamically -->
+      </select>
+    </label>
+
+    <br><br>
+    <div id="employeeDetails"></div>
+
+    <br><br>
     <button type="submit">Save</button>
     <button type="button" id="cancelEdit">Cancel</button>
   </form>
-  <br> <br>
+  <br>
   <h3>Assets List</h3>
   <table border="1" id="assetTable">
     <thead>
@@ -79,6 +91,7 @@
         <th>Serial</th>
         <th>Date</th>
         <th>Status</th>
+        <th>Assigned to</th>
         <th>Actions</th>
       </tr>
     </thead>
