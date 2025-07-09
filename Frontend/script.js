@@ -119,29 +119,33 @@ form.addEventListener('submit', function (e) {
         alert("Serial number should be unique!");
         return;
       }
-    });
-
+  // If no existing asset with the same serial number, proceed to save
+  console.log("No duplicate serial number found, proceeding to save asset.");
   const method = asset["Asset-ID"] ? 'PUT' : 'POST';  // Use PUT for updating, POST for new assets
-  const url = asset["Asset-ID"] ? `${API_URL}assets/${asset["Asset-ID"]}` : `${API_URL}assets`;
+      const url = asset["Asset-ID"] ? `${API_URL}assets/${asset["Asset-ID"]}` : `${API_URL}assets`;
 
-  fetch(url, {
-    method,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(asset)
-  })
-    .then(async res => {
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to save asset.");
-      }
-      return data;
-    })
-    .then(() => {
-      form.reset();
-      loadAssets();  // Reload the assets table after saving
+      fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(asset)
+      })
+        .then(async res => {
+          const data = await res.json();
+          if (!res.ok) {
+            throw new Error(data.error || "Failed to save asset.");
+          }
+          return data;
+        })
+        .then(() => {
+          form.reset();
+          loadAssets();  // Reload the assets table after saving
+        })
+        .catch(err => {
+          alert("Error: " + err.message);
+        });
     })
     .catch(err => {
-      alert("Error: " + err.message);
+      console.error("Error fetching existing assets:", err);
     });
 });
 
