@@ -111,6 +111,16 @@ form.addEventListener('submit', function (e) {
 
   console.log("Asset to be saved: ", asset);
 
+  fetch(`${API_URL}assets`)
+    .then(res => res.json())
+    .then(data => {
+      const existingAsset = data.find(existing => existing['Serial-Number'] === asset['Serial-Number']);
+      if (existingAsset) {
+        alert("Serial number should be unique!");
+        return;
+      }
+    });
+
   const method = asset["Asset-ID"] ? 'PUT' : 'POST';  // Use PUT for updating, POST for new assets
   const url = asset["Asset-ID"] ? `${API_URL}assets/${asset["Asset-ID"]}` : `${API_URL}assets`;
 
