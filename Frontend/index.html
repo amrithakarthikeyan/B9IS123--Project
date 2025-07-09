@@ -43,7 +43,7 @@
     <br>
     <br>
     <label for="Model">Model:</label>
-    <input name="Model" id="Model" />
+    <input name="Model" id="Model" required />
     <br>
     <br>
     <label for="Serial-Number">Serial number:</label>
@@ -51,11 +51,11 @@
     <br>
     <br>
     <label for="Purchase_Date">Date:</label>
-    <input type="date" name="Purchase_Date" id="Purchase_Date" />
+    <input type="date" name="Purchase_Date" id="Purchase_Date" required/>
     <br>
     <br>
     <label for="Status">Status of Asset:</label>
-    <select name="Status" id="Status">
+    <select name="Status" id="Status" required>
       <option value="available">Available</option>
       <option value="assigned">Assigned</option>
       <option value="maintenance">Maintenance</option>
@@ -63,7 +63,6 @@
       <option value="retired">Retired</option>
     </select>
     <br><br>
-
     <label for="Employee-ID">
       Assigned to Employee:
       <select name="Employee-ID" id="Employee-ID" required>
