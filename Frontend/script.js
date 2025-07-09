@@ -61,6 +61,33 @@ async function loadAssets() {
   }
 }
 
+// Function to load employees into the dropdown
+function loadEmployees() {
+  fetch(API_URL + 'employees')  // Fetch all employees
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Failed to fetch employees');
+      }
+      return res.json();
+    })
+    .then(data => {
+      // Log employee data inside the .then() block, where data is available
+      console.log("Employees loaded:", data);
+      const employeeSelect = document.getElementById('Employee-ID');
+      // Clear the current options
+      employeeSelect.innerHTML = '<option value="">-- Select Employee --</option>';
+      data.forEach(employee => {
+        const option = document.createElement('option');
+        option.value = employee['Employee_ID'];  // Use Employee_ID as the value
+        option.textContent = `${employee['Name']} (ID: ${employee['Employee_ID']})`;  // Display Name and Employee_ID
+        employeeSelect.appendChild(option);
+      });
+    })
+    .catch(err => {
+      console.error("Error fetching employees:", err);
+      alert("Failed to load employees. Please try again later.");
+    });
+}
 
 // Handle form submission to save data
 form.addEventListener('submit', function (e) {
@@ -135,5 +162,6 @@ function deleteAsset(id) {
 }
 window.onload = function () {
   console.log("Script Loaded");
+  loadEmployees();  // Load employees dropdown
   loadAssets();     // Load assets table
 };
