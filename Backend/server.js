@@ -19,7 +19,17 @@ db.run(`CREATE TABLE IF NOT EXISTS assets (
   "Model" TEXT NOT NULL,
   "Serial-Number" INTEGER NOT NULL UNIQUE,
   "Purchase_Date" TEXT,
-  "Status" TEXT
+  "Status" TEXT,
+  "Employee_ID" INTEGER,
+  FOREIGN KEY ("Employee_ID") REFERENCES employees("Employee_ID")
+)`);
+
+//db.run (`DROP TABLE employees`);
+db.run(`CREATE TABLE IF NOT EXISTS "employees" (
+  "Employee_ID" INTEGER PRIMARY KEY NOT NULL,
+  "Name" TEXT NOT NULL,
+  "Department" INTEGER,
+  "Email" TEXT UNIQUE
 )`);
 
 app.get('/', (req, res) => {
@@ -28,23 +38,31 @@ app.get('/', (req, res) => {
 
 // GET all assets
 app.get('/assets', (req, res) => {
-  db.all(`SELECT 
+  console.log("I am in assets")
+  data = db.all(`SELECT 
     "Asset-ID",
     "Asset-Type",
     "Brand",
     "Model",
     "Serial-Number",
     "Purchase_Date",
-    "Status"
+    "Status",
+    "Employee_ID"
     FROM assets`, 
     (err, rows) => {
       if (err) return res.status(500).json({ error: err.message });
+      console.log("data on the db call")
+      console.log(rows)
+
       res.json(rows);
     });
+    console.log("data on the backend")
+    console.log(data)
 });
 
 // GET single asset
 app.get('/assets/:id', (req, res) => {
+  console.log("I am getting called here")
   db.get(`SELECT 
     "Asset-ID",
     "Asset-Type",
@@ -52,31 +70,42 @@ app.get('/assets/:id', (req, res) => {
     "Model",
     "Serial-Number",
     "Purchase_Date",
-    "Status"
+    "Status",
+    "Employee_ID"
     FROM assets WHERE "Asset-ID" = ?`, 
     [req.params.id], 
     (err, row) => {
       if (err) return res.status(500).json({ error: err.message });
+      console.log(row);
       res.json(row);
     });
 });
 
+//GET single employee details
+app.get('/employees', (req, res) => {
+  db.all(`SELECT "Employee_ID", "Name" FROM employees`, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);  // Returns a list of employees with ID and Name
+  });
+});
+
+
+
 // ADD asset
 app.post('/assets', (req, res) => {
-  const { "Asset-Type": assetType, Brand, Model, "Serial-Number": serialNumber, Purchase_Date, Status } = req.body;
-
+  const { "Asset-Type": assetType, Brand, Model, "Serial-Number": serialNumber, Purchase_Date, Status, Employee_ID } = req.body;
+  console.log("Received Employee_ID:", Employee_ID);
   // Basic validation for missing fields
-  if (!assetType || !Brand || !Model || !serialNumber || !Purchase_Date || !Status) {
+  if (!assetType || !Brand || !Model || !serialNumber || !Purchase_Date || !Status || !Employee_ID) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
   db.run(`INSERT INTO assets (
-    "Asset-Type", "Brand", "Model", "Serial-Number", "Purchase_Date", "Status")
-    VALUES (?, ?, ?, ?, ?, ?)`,
-    [assetType, Brand, Model, serialNumber, Purchase_Date, Status],
+    "Asset-Type", "Brand", "Model", "Serial-Number", "Purchase_Date", "Status", "Employee_ID")
+    VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [assetType, Brand, Model, serialNumber, Purchase_Date, Status, Employee_ID],
     function(err) {
       if (err) {
-        // Handle unique constraint error for Serial-Number
         if (err.message.includes('UNIQUE')) {
           return res.status(400).json({ error: 'Serial Number must be unique' });
         }
@@ -86,24 +115,27 @@ app.post('/assets', (req, res) => {
     });
 });
 
+
 // UPDATE asset
 app.put('/assets/:id', (req, res) => {
-  const { "Asset-Type": assetType, Brand, Model, "Serial-Number": serialNumber, Purchase_Date, Status } = req.body;
+  const { "Asset-Type": assetType, Brand, Model, "Serial-Number": serialNumber, Purchase_Date, Status, Employee_ID } = req.body;
+  
   db.run(`UPDATE assets SET 
     "Asset-Type" = ?, 
     "Brand" = ?, 
     "Model" = ?, 
     "Serial-Number" = ?, 
     "Purchase_Date" = ?, 
-    "Status" = ? 
+    "Status" = ?, 
+    "Employee_ID" = ?
     WHERE "Asset-ID" = ?`,
-    [assetType, Brand, Model, serialNumber, Purchase_Date, Status, req.params.id],
+    [assetType, Brand, Model, serialNumber, Purchase_Date, Status, Employee_ID, req.params.id],
     function(err) {
       if (err) return res.status(500).json({ error: err.message });
       res.json({ updated: this.changes });
     });
-    console.log("Asset edited successfully " + `${assetType}, ${Brand}, ${Model}, ${serialNumber}, ${Purchase_Date}, ${Status}`);
 });
+
 
 // DELETE asset
 app.delete('/assets/:id', (req, res) => {
